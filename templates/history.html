@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h5 class="mb-3">Recent queries</h5>
+{% if not rows %}
+  <p class="text-muted">No queries yet.</p>
+{% endif %}
+{% for row in rows %}
+  <div class="card mb-2">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <span class="badge bg-success">{{ row.category }}</span>
+        <span class="small text-muted">{{ row.created_at }}</span>
+      </div>
+      <p class="mt-2 mb-1"><strong>Device:</strong> {{ row.device_description }}</p>
+      <p class="mb-1" style="white-space: pre-line;">{{ row.response }}</p>
+      <p class="small text-muted mb-0">Grounded in: {{ row.sources }}</p>
+    </div>
+  </div>
+{% endfor %}
+<a href="/" class="btn btn-outline-secondary">Back</a>
+{% endblock %}

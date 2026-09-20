@@ -1,0 +1,51 @@
+PLACEHOLDER / DEMO KNOWLEDGE BASE
+=================================
+This file is NOT the official legal text of India's E-Waste (Management)
+Rules, 2022. It is a short, plain-language set of paraphrased summary notes
+written for testing the retrieval pipeline before the real source documents
+are added. Replace or supplement this file with the actual official PDFs
+(placed in data/raw/) before using this for your final submission, and cite
+the real rule sections in your write-up.
+
+[Category: IT and Telecommunication Equipment]
+This category covers items such as computers, laptops, printers, mobile
+phones, tablets, and networking equipment like routers and modems. These
+devices typically contain circuit boards with recoverable copper, gold,
+silver, and palladium, alongside components such as lithium-ion batteries
+and LCD/LED screens that require careful handling. Improper dismantling of
+circuit boards can release lead and other heavy metals. These items should
+be handed to an authorized collection point, producer take-back program, or
+a registered dismantler/recycler rather than an informal scrap dealer.
+
+[Category: Consumer Electronics]
+This category includes televisions, refrigerators, washing machines, air
+conditioners, and microwave ovens. Refrigerators and air conditioners may
+contain refrigerant gases and insulation foams that require specialised
+handling to avoid environmental release. CRT and older television screens
+contain leaded glass. Large consumer electronics should be returned through
+manufacturer take-back schemes or given to authorized recyclers equipped to
+handle refrigerant recovery and glass separation.
+
+[Category: Batteries and Power Storage]
+This category includes lithium-ion batteries, power banks, and battery
+packs from phones and laptops. Damaged lithium-ion batteries can pose fire
+risks if punctured, crushed, or exposed to heat, and should never be placed
+in regular household trash. They should be taken to a designated battery
+collection point or an authorized e-waste collection center for safe
+handling.
+
+[Category: Lighting Equipment]
+This category includes CFL and fluorescent tube lights, which may contain
+small amounts of mercury. These should not be broken or disposed of with
+general waste; they should be returned to a collection point equipped to
+handle mercury-containing waste.
+
+[General Guidance: Authorized Channels vs Informal Recycling]
+Selling old electronics to informal, unregistered scrap dealers often
+results in manual dismantling without protective equipment, which can
+expose workers to lead, mercury, cadmium, and other toxic substances, and
+typically results in valuable recoverable materials being lost or
+improperly processed. Using an authorized collection center, manufacturer
+take-back program, or a registered dismantler/recycler is the safer and
+more resource-efficient option, and is the approach reflected in India's
+formal e-waste management framework.

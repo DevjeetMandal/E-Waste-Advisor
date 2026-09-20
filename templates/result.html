@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm mb-3">
+      <div class="card-body">
+        <h6 class="text-muted">You described:</h6>
+        <p>{{ device_description }}</p>
+        <span class="badge bg-success">{{ category }}</span>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Disposal guidance</h5>
+        <p style="white-space: pre-line;">{{ answer }}</p>
+        <hr>
+        <p class="small text-muted mb-0">Grounded in: {{ sources_used }}</p>
+      </div>
+    </div>
+
+    <a href="/" class="btn btn-outline-secondary mt-3">Check another device</a>
+  </div>
+</div>
+{% endblock %}
