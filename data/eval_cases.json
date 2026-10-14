@@ -1,0 +1,262 @@
+{
+  "classifier": [
+    [
+      "old laptop with cracked screen",
+      "IT and Telecommunication Equipment"
+    ],
+    [
+      "Samsung phone that won't charge",
+      "IT and Telecommunication Equipment"
+    ],
+    [
+      "broken tablet",
+      "IT and Telecommunication Equipment"
+    ],
+    [
+      "inkjet printer, cartridges dried",
+      "IT and Telecommunication Equipment"
+    ],
+    [
+      "wifi router that died",
+      "IT and Telecommunication Equipment"
+    ],
+    [
+      "old desktop computer and keyboard",
+      "IT and Telecommunication Equipment"
+    ],
+    [
+      "external hard disk not detected",
+      "IT and Telecommunication Equipment"
+    ],
+    [
+      "CRT television",
+      "Consumer Electronics"
+    ],
+    [
+      "bluetooth speaker with dead driver",
+      "Consumer Electronics"
+    ],
+    [
+      "broken earphones",
+      "Consumer Electronics"
+    ],
+    [
+      "old digital camera",
+      "Consumer Electronics"
+    ],
+    [
+      "refrigerator that no longer cools",
+      "Large Household Appliances"
+    ],
+    [
+      "AC compressor failed",
+      "Large Household Appliances"
+    ],
+    [
+      "front-load washing machine",
+      "Large Household Appliances"
+    ],
+    [
+      "mixer grinder, motor burnt",
+      "Small Household Appliances"
+    ],
+    [
+      "electric kettle",
+      "Small Household Appliances"
+    ],
+    [
+      "table fan",
+      "Small Household Appliances"
+    ],
+    [
+      "microwave not heating",
+      "Small Household Appliances"
+    ],
+    [
+      "dead power bank",
+      "Batteries and Power Storage"
+    ],
+    [
+      "swollen lithium battery",
+      "Batteries and Power Storage"
+    ],
+    [
+      "inverter battery 5 years old",
+      "Batteries and Power Storage"
+    ],
+    [
+      "broken CFL bulb",
+      "Lighting Equipment"
+    ],
+    [
+      "fused tube light",
+      "Lighting Equipment"
+    ],
+    [
+      "LED lamp flickering",
+      "Lighting Equipment"
+    ],
+    [
+      "electric drill that stopped",
+      "Electrical and Electronic Tools"
+    ],
+    [
+      "old wooden chair",
+      "Other Electronic/Electrical Equipment"
+    ],
+    [
+      "my backpack",
+      "Other Electronic/Electrical Equipment"
+    ],
+    [
+      "controlled burn leftovers",
+      "Other Electronic/Electrical Equipment"
+    ]
+  ],
+  "retrieval": [
+    {
+      "query": "what to do with a dead lithium battery",
+      "expect_any": [
+        "battery",
+        "batteries"
+      ]
+    },
+    {
+      "query": "old mobile phone disposal",
+      "expect_any": [
+        "mobile",
+        "telecommunication",
+        "phone"
+      ]
+    },
+    {
+      "query": "laptop recycling",
+      "expect_any": [
+        "laptop",
+        "computer",
+        "information technology"
+      ]
+    },
+    {
+      "query": "fluorescent lamp mercury",
+      "expect_any": [
+        "lamp",
+        "fluorescent",
+        "mercury",
+        "lighting"
+      ]
+    },
+    {
+      "query": "who is responsible for collecting e-waste",
+      "expect_any": [
+        "producer",
+        "collect",
+        "responsib"
+      ]
+    },
+    {
+      "query": "authorised recycler or dismantler",
+      "expect_any": [
+        "recycler",
+        "dismantler",
+        "authoris",
+        "authoriz"
+      ]
+    },
+    {
+      "query": "refrigerator and air conditioner disposal",
+      "expect_any": [
+        "refrigerator",
+        "air conditioner",
+        "air-conditioner"
+      ]
+    },
+    {
+      "query": "television disposal",
+      "expect_any": [
+        "television"
+      ]
+    },
+    {
+      "query": "washing machine end of life",
+      "expect_any": [
+        "washing machine"
+      ]
+    },
+    {
+      "query": "what is extended producer responsibility for electronics",
+      "expect_any": [
+        "extended producer responsibility",
+        "epr"
+      ]
+    },
+    {
+      "query": "can I sell my old computer to a scrap dealer",
+      "expect_any": [
+        "dismantler",
+        "recycler",
+        "authoris",
+        "authoriz",
+        "refurbish"
+      ]
+    },
+    {
+      "query": "what hazardous substances are restricted in electronics",
+      "expect_any": [
+        "lead",
+        "mercury",
+        "cadmium",
+        "hazardous"
+      ]
+    },
+    {
+      "query": "refurbishing an old device",
+      "expect_any": [
+        "refurbish"
+      ]
+    },
+    {
+      "query": "what penalty for dumping e-waste",
+      "expect_any": [
+        "penalt",
+        "environmental compensation",
+        "violation"
+      ]
+    },
+    {
+      "query": "microwave oven disposal",
+      "expect_any": [
+        "microwave"
+      ]
+    },
+    {
+      "query": "tablet and printer recycling",
+      "expect_any": [
+        "tablet",
+        "printer"
+      ]
+    }
+  ],
+  "out_of_domain": [
+    "how to bake sourdough bread",
+    "best cricket player of all time",
+    "how do I change a car tyre",
+    "what is the capital of France",
+    "symptoms of the common cold",
+    "how to grow tomatoes on a balcony",
+    "latest bollywood movie reviews",
+    "how to tie a necktie",
+    "best way to learn guitar",
+    "how to file income tax returns",
+    "recipe for chicken biryani",
+    "how do vaccines work",
+    "tips for a job interview",
+    "what is the speed of light",
+    "how to train a puppy",
+    "cheap flights to goa",
+    "how to meditate",
+    "who won the football world cup",
+    "how to remove a coffee stain",
+    "explain photosynthesis"
+  ]
+}

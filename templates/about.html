@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8"><div class="card shadow-sm"><div class="card-body p-4">
+  <h4>How this works</h4>
+  <ol>
+    <li><strong>Plan.</strong> An LLM agent decides which tools to call: a transparent keyword classifier, semantic search over India's e-waste documents, and (if you give a location) a recycler lookup. Safeguards force classification and at least one search even if the model skips them.</li>
+    <li><strong>Retrieve.</strong> Document pages are embedded locally; the closest passages become numbered evidence.</li>
+    <li><strong>Answer.</strong> A second call must return structured JSON. Citations are checked in code against what was actually retrieved, and the answer is marked "not covered" if retrieval similarity is below {{ min_score }} or no valid citation backs it.</li>
+    <li><strong>Photo input (optional).</strong> A pretrained YOLO model identifies common devices; the photo is processed in memory and not stored.</li>
+  </ol>
+  <h5 class="mt-4">Responsible AI</h5>
+  <ul>
+    <li><strong>Transparency:</strong> every rule-based claim links to a source page; the agent's steps are shown.</li>
+    <li><strong>Fairness:</strong> guidance comes from official documents, not model assumptions; weak evidence is reported as weak.</li>
+    <li><strong>Ethics:</strong> safety text and recycler names are never model-generated; users are steered to authorised channels.</li>
+    <li><strong>Privacy:</strong> only the device description (and optional city/state) is used; photos are not stored.</li>
+  </ul>
+  <h5 class="mt-4">Known limitations</h5>
+  <ul>
+    <li>Recycler data is the CPCB list as on 08-06-2023 and covers only {{ covered|join(', ') }} so far. Authorisations change.</li>
+    <li>"Hazard level", materials and risks are AI-assessed from general knowledge and can be wrong.</li>
+    <li>Photo detection covers only a few common devices and says nothing about condition.</li>
+    <li>Hindi and Odia output is machine-translated.</li>
+  </ul>
+</div></div></div></div>
+{% endblock %}

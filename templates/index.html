@@ -1,32 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-md-7">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h4 class="card-title mb-3">What device do you want to dispose of?</h4>
-        <p class="text-muted">
-          Describe the item — type, approximate age, and condition — and
-          get guidance on recoverable materials, disposal risks, and the
-          correct disposal channel, grounded in India's e-waste guidance.
-        </p>
-        {% if error %}
-          <div class="alert alert-warning">{{ error }}</div>
-        {% endif %}
-        <form method="POST" action="/advise">
-          <div class="mb-3">
-            <textarea
-              class="form-control"
-              name="device_description"
-              rows="3"
-              placeholder="e.g. A 4-year-old laptop, battery no longer holds charge, screen still works"
-              required
-            ></textarea>
-          </div>
-          <button type="submit" class="btn btn-success">Get disposal guidance</button>
-        </form>
+<div class="row justify-content-center"><div class="col-lg-8">
+  <div class="card shadow-sm"><div class="card-body p-4">
+    <h4 class="mb-1">What do you want to get rid of?</h4>
+    <p class="text-muted">Describe an old or broken electronic item{% if vision_ok %}, or upload a photo{% endif %}. You'll get the hazard level,
+      what can be recovered, where to take it, and which official source says so.</p>
+    {% if error %}<div class="alert alert-warning">{{ error }}</div>{% endif %}
+    <form method="POST" action="/advise" enctype="multipart/form-data">
+      <div class="mb-3">
+        <textarea id="desc" class="form-control" name="device_description" rows="3"
+          placeholder="e.g. 4-year-old laptop, battery swollen, screen works">{{ prefill or '' }}</textarea>
+        <div class="mt-2">
+          {% for ex in ['4-year-old laptop with a swollen battery', 'Old CRT television', 'Broken CFL tube light', 'Dead power bank', 'Refrigerator that no longer cools'] %}
+            <a href="#" class="chip text-decoration-none" onclick="document.getElementById('desc').value=this.innerText;return false;">{{ ex }}</a>
+          {% endfor %}
+        </div>
       </div>
-    </div>
-  </div>
-</div>
+      {% if vision_ok %}
+      <div class="mb-3">
+        <label class="form-label">Or upload a photo <span class="small-muted">(laptops, phones, TVs, monitors, keyboards, fridges, microwaves… up to {{ max_mb }} MB; not stored)</span></label>
+        <input class="form-control" type="file" name="photo" accept="image/*">
+      </div>
+      {% endif %}
+      <div class="row g-3 mb-3">
+        <div class="col-md-4"><label class="form-label">State <span class="small-muted">(optional)</span></label>
+          <select class="form-select" name="state">{% for s in states %}<option>{{ s }}</option>{% endfor %}</select></div>
+        <div class="col-md-4"><label class="form-label">City <span class="small-muted">(optional)</span></label>
+          <input class="form-control" name="city" placeholder="e.g. Bhubaneswar"></div>
+        <div class="col-md-4"><label class="form-label">Answer language</label>
+          <select class="form-select" name="language">{% for l in languages %}<option>{{ l }}</option>{% endfor %}</select></div>
+      </div>
+      <p class="small-muted">Local recycler lookup currently covers: {{ covered|join(', ') }}. Hindi/Odia answers are AI-translated — double-check important details.</p>
+      <button class="btn btn-success" type="submit">Get disposal guidance</button>
+    </form>
+  </div></div>
+</div></div>
 {% endblock %}

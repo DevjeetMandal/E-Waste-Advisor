@@ -1,0 +1,3 @@
+-r requirements.txt
+-r requirements-vision.txt
+pytest

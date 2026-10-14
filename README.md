@@ -1,65 +1,77 @@
-# E-Waste Recycling Guide
+# E-Waste Advisor (v2)
 
-An AI advisor that takes a plain-language description of an old or broken
-electronic device and explains what materials it contains, the risks of
-disposing of it incorrectly, and the correct disposal channel — grounded
-in India's e-waste management guidance via retrieval-augmented generation.
+An agentic RAG assistant that tells people in India how to dispose of old electronics:
+hazard level, what is worth recovering, where to take it, and **which official document
+and page says so**.
 
-## How it works
+## What's new in v2
+| Area | v1 | v2 |
+|---|---|---|
+| Pipeline | fixed: classify -> retrieve -> one LLM call | **tool-calling agent** (classify, search rules, find recyclers) with safeguards that force the essential steps |
+| Output | free text | **validated JSON** rendered as cards: hazard badge, materials, risks, do/don't, disposal options |
+| Citations | filename only | **file + page number**, checked in code against what was actually retrieved |
+| Retrieval | dense only | **hybrid**: dense + BM25 keyword search, rank-fused (finds items named in schedule tables) |
+| Weak retrieval | still answered | **two-tier grounding gate**: similarity bar, stricter when no device is named; or the device is literally named in a retrieved passage |
+| Input | text | text **or photo** (pretrained YOLO) |
+| Local help | none | **CPCB-listed recyclers** by state/city (Odisha, Delhi, West Bengal, Jharkhand, Chhattisgarh, Assam so far) |
+| Safety | LLM only | deterministic safety box (swollen battery, broken CFL, data wiping) - never model-generated |
+| Languages | English | English / Hindi / Odia (machine-translated) |
+| Classifier | substring matching (bug: "ac" matched "backpack") | whole-word matching |
+| Reliability | crashed when Groq retired a model | automatic **model fallback list** + friendly errors |
+| Testing | none | 57 tests + `eval.py` + `diagnose.py` |
 
-1. **Classify** — `classify.py` maps your device description to a broad
-   e-waste category using a transparent keyword rule set.
-2. **Retrieve** — `rag_utils.py` embeds your query with a local
-   sentence-transformers model and finds the most relevant chunks from
-   the knowledge base built by `ingest.py`.
-3. **Generate** — `app.py` sends your device details + the retrieved
-   chunks to a free Groq-hosted Llama model, which explains the guidance
-   and cites which source it drew from.
-4. **Log** — every query and response is saved to a local SQLite
-   database (`data/history.db`) for a simple history view.
+## Source documents (important)
+Put these in `data/raw/`:
+- **India's E-Waste (Management) Rules, 2022** (Gazette PDF). The item schedules (Schedule I etc.) are inside it.
+- Do **not** use CPCB's "Red/Orange/Green/White category" list of *industries*. It is not an e-waste item list;
+  it fills the index with numeric tables about soap and rubber factories. (Recycler data comes from
+  `data/recyclers.csv`, not from a PDF.)
+
+`ingest.py` cleans what it reads: it strips the garbled Devanagari from bilingual Gazette pages, removes
+running page headers, and drops number-heavy table chunks. It prints chunks per source so you can see
+what actually went into the index.
 
 ## Setup
-
 ```bash
+python -m venv venv && venv\Scripts\activate        # Windows
 pip install -r requirements.txt
-cp .env.example .env
-# edit .env and add a free Groq API key from https://console.groq.com/keys
+pip install -r requirements-vision.txt              # optional: photo input
+copy .env.example .env                              # add your Groq key
+python ingest.py                                    # builds the index from data/raw/*.pdf
+python app.py                                       # http://127.0.0.1:5000
 ```
+`ingest.py` now stores **page numbers**. Re-run it after pulling v2 (the old index has none, and the
+app will tell you if the index doesn't match).
 
-### Add the real knowledge base (important before final submission)
-
-This repo ships with `sample_data/sample_rules.txt` — a short,
-**paraphrased placeholder** so the pipeline can be tested immediately.
-It is NOT the official legal text.
-
-Before you submit:
-1. Download the official India E-Waste (Management) Rules, 2022 PDF and
-   CPCB's e-waste category list.
-2. Place them in `data/raw/`.
-3. Re-run `python ingest.py` — it will automatically prefer the real
-   PDFs over the placeholder file.
-
-### Build the index and run
-
+## Calibrate before you trust it
 ```bash
-python ingest.py    # builds data/chunks.json and data/embeddings.npy
-python app.py        # starts the app at http://127.0.0.1:5000
+python eval.py          # classifier accuracy, retrieval hit rate, threshold calibration
+python eval.py --e2e 8  # also runs the full agent on 8 queries (uses Groq calls)
 ```
+`eval.py` measures the *real* gate: in-domain queries wrongly refused, off-topic queries wrongly accepted.
+Edit `data/eval_cases.json` so the retrieval keywords match wording that really appears in your PDFs, then tune
+`EWASTE_MIN_SCORE` / `EWASTE_MIN_SCORE_NO_DEVICE` in `.env`. The defaults (0.25 / 0.40) are guesses.
+`python diagnose.py` shows, per query, the gate decision and the top chunks; `python diagnose.py --find word`
+tells you whether a word is in the index at all.
+`eval.py` writes `eval_report.md` - good material for the Test & Refine section.
 
-Visit `/history` to see a log of past queries — useful for screenshots.
+## Tests
+```bash
+pip install -r requirements-dev.txt
+python -m pytest -q
+```
+Tests run fully offline (fake LLM, hash embeddings). They cover citation validation, forced tool steps,
+the grounding gate, malformed model output, the Groq 404 model-retirement case, DB migration and the Flask routes.
 
-## Notes for the project write-up
+## Extending the recycler list
+`data/recyclers.csv` (columns: name, address, state, district, city). Source: CPCB list of authorised
+dismantlers/recyclers as on 08-06-2023. Add rows for more states; no code change needed.
+Authorisations change - always verify with the State Pollution Control Board.
 
-- **AI elements used**: Retrieval-Augmented Generation (RAG), prompt
-  engineering, rule-based classification, conversational interface.
-- **Responsible AI**:
-  - *Transparency*: every answer cites the source document it drew from,
-    and the classifier logic is fully inspectable (no black-box model).
-  - *Fairness*: guidance is grounded in retrieved reference text rather
-    than the model's unconstrained assumptions.
-  - *Ethics*: the system prompt instructs the model to say so honestly
-    if the retrieved context doesn't clearly cover a device, rather than
-    guessing — and steers users toward authorized recyclers over
-    informal/unsafe channels.
-  - *Privacy*: no personal data is collected beyond the device
-    description itself.
+## Known limitations (state these in your write-up)
+- Hazard level, materials and risks are AI-assessed from general knowledge, not from the rules.
+- Photo detection covers a few COCO classes only (laptop, phone, TV/monitor, keyboard, mouse, remote,
+  microwave, oven, toaster, refrigerator, hair dryer). It says nothing about condition.
+- Recycler data is dated and partial.
+- Hindi/Odia output is machine-translated and unreviewed.
+- Free-tier Groq limits apply.

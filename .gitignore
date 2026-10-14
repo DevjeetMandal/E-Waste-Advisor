@@ -1,7 +1,92 @@
+# ==============================
+# SECRETS & ENVIRONMENT VARIABLES
+# ==============================
 .env
+.env.*
+!.env.example
+
+# ==============================
+# PYTHON VIRTUAL ENVIRONMENTS
+# ==============================
+venv/
+.venv/
+env/
+ENV/
+
+# ==============================
+# PYTHON CACHE & COMPILED FILES
+# ==============================
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+
+# ==============================
+# TESTING & COVERAGE
+# ==============================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# ==============================
+# GENERATED RAG INDEX & EMBEDDINGS
+# ==============================
 data/chunks.json
 data/embeddings.npy
+data/index_meta.json
+
+# ==============================
+# LOCAL DATABASE & USER HISTORY
+# ==============================
 data/history.db
-venv/
+*.sqlite
+*.sqlite3
+
+# ==============================
+# AI MODEL WEIGHTS
+# ==============================
+*.pt
+*.pth
+*.onnx
+*.h5
+*.safetensors
+yolov8n.pt
+models/
+checkpoints/
+
+# ==============================
+# UPLOADED FILES & GENERATED DATA
+# ==============================
+uploads/
+instance/
+*.log
+eval_report.md
+
+# ==============================
+# JUPYTER NOTEBOOKS
+# ==============================
+.ipynb_checkpoints/
+
+# ==============================
+# EDITORS & OPERATING SYSTEM
+# ==============================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==============================
+# BUILD & DISTRIBUTION
+# ==============================
+build/
+dist/
+*.egg-info/
+
+# ==============================
+# LOCAL ENVIRONMENT FILES
+# ==============================
+.python-version

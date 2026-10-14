@@ -1,21 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-<h5 class="mb-3">Recent queries</h5>
-{% if not rows %}
-  <p class="text-muted">No queries yet.</p>
-{% endif %}
+<h5 class="mb-3">Usage so far</h5>
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><div class="small-muted">Queries</div><div class="fs-3">{{ stats.total }}</div></div></div></div>
+  <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><div class="small-muted">Backed by a cited rule</div>
+    <div class="fs-3">{{ stats.rule_backed }}<span class="small-muted"> / {{ stats.rated }}</span></div></div></div></div>
+  <div class="col-md-6"><div class="card shadow-sm"><div class="card-body"><div class="small-muted mb-1">By category</div>
+    {% for c in stats.by_category %}<span class="chip">{{ c.category }} · {{ c.n }}</span>{% else %}<span class="small-muted">—</span>{% endfor %}
+    <div class="small-muted mt-2 mb-1">By AI-assessed hazard</div>
+    {% for h in stats.by_hazard %}<span class="hazard-pill hazard-{{ h.hazard_level }} me-1">{{ h.hazard_level }} · {{ h.n }}</span>{% else %}<span class="small-muted">—</span>{% endfor %}
+  </div></div></div>
+</div>
+<h6>Recent queries</h6>
 {% for row in rows %}
-  <div class="card mb-2">
-    <div class="card-body">
-      <div class="d-flex justify-content-between">
-        <span class="badge bg-success">{{ row.category }}</span>
-        <span class="small text-muted">{{ row.created_at }}</span>
-      </div>
-      <p class="mt-2 mb-1"><strong>Device:</strong> {{ row.device_description }}</p>
-      <p class="mb-1" style="white-space: pre-line;">{{ row.response }}</p>
-      <p class="small text-muted mb-0">Grounded in: {{ row.sources }}</p>
-    </div>
-  </div>
-{% endfor %}
-<a href="/" class="btn btn-outline-secondary">Back</a>
+  <div class="card mb-2 shadow-sm"><div class="card-body">
+    <div class="d-flex justify-content-between"><span class="chip">{{ row.category }}</span><span class="small-muted">{{ row.created_at[:16] }}</span></div>
+    <p class="mt-2 mb-1"><strong>{{ row.device_description }}</strong>
+      {% if row.hazard_level %}<span class="hazard-pill hazard-{{ row.hazard_level }} ms-2">{{ row.hazard_level }}</span>{% endif %}
+      {% if row.used_photo %}<span class="chip">📷</span>{% endif %}</p>
+    <p class="mb-1">{{ row.response }}</p>
+    {% if row.sources %}<div class="small-muted">Sources: {{ row.sources }}</div>{% endif %}
+  </div></div>
+{% else %}<p class="text-muted">No queries yet.</p>{% endfor %}
+<a href="/" class="btn btn-outline-secondary mt-2">Back</a>
 {% endblock %}
